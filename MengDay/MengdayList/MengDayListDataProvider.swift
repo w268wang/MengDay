@@ -48,16 +48,22 @@ class MengDayListDataProvider: NSObject, UITableViewDataSource {
     }
     
     func progressUntilBirthday(birthday: MengDay) -> Float? {
-        let calculationComponents = birthday.birthday
         
-        if let today = today, todayComponents = todayComponents, date = birthday.birthday.date {
-            if gregorian!.compareDate(today, toDate: date, toUnitGranularity: [.Month, .Day]) == .OrderedDescending {
-                calculationComponents.year = todayComponents.year + 1
-            } else {
-                calculationComponents.year = todayComponents.year + 1
+        let calculationComponents = birthday.birthday.copy() as! NSDateComponents
+        if let todayComponents = todayComponents {
+            calculationComponents.year = todayComponents.year
+            
+            if calculationComponents.month < todayComponents.month ||
+                (calculationComponents.month == todayComponents.month &&
+                    calculationComponents.day < todayComponents.day) {
+                
+                calculationComponents.year += 1 // Swift 3 compliant ...
             }
             
-            let components = gregorian?.components([.Day], fromDateComponents: todayComponents, toDateComponents: calculationComponents, options: [])
+            let components = gregorian?.components([.Day],
+                                                   fromDateComponents: todayComponents,
+                                                   toDateComponents: calculationComponents,
+                                                   options: [])
             
             return 1.0-Float(components!.day)/Float(365)
         } else {
