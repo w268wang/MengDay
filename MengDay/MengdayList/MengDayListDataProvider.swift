@@ -23,11 +23,7 @@ class MengDayListDataProvider: NSObject, UITableViewDataSource {
             }
         }
     }
-    
-    func registerCellsForTableView(tableView: UITableView) {
-        tableView.registerClass(MengDayCell.self, forCellReuseIdentifier: cellIdentifer)
-    }
-    
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return birthdays.count
     }
@@ -74,7 +70,9 @@ class MengDayListDataProvider: NSObject, UITableViewDataSource {
 
 extension MengDayListDataProvider {
     func addBirthday(birthday: MengDay) {
-        birthdays.append(birthday)
-        birthdays.sortInPlace { progressUntilBirthday($0) > progressUntilBirthday($1) }
+        if !birthdays.contains(birthday) {
+            birthdays.append(birthday)
+            birthdays.sortInPlace { progressUntilBirthday($0) > progressUntilBirthday($1) }
+        }
     }
 }

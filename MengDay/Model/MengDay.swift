@@ -8,8 +8,14 @@
 
 import Foundation
 
-struct MengDay {
+struct MengDay: Equatable {
     let firstName: String
     let lastName: String
     let birthday: NSDateComponents
+}
+
+func ==(lhs: MengDay, rhs: MengDay) -> Bool {
+    return lhs.firstName == rhs.firstName &&
+            lhs.lastName == rhs.lastName &&
+            lhs.birthday == rhs.birthday
 }
