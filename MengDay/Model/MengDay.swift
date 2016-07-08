@@ -2,20 +2,22 @@
 //  MengDay.swift
 //  MengDay
 //
-//  Created by Weijie Wang on 2016-06-28.
+//  Created by Steven Xu on 2016-07-08.
 //  Copyright © 2016 Weijie Wang. All rights reserved.
 //
 
 import Foundation
+import CoreData
 
-struct MengDay: Equatable {
-    let firstName: String
-    let lastName: String
-    let birthday: NSDateComponents
+
+class MengDay: NSManagedObject {
+
+// Insert code here to add functionality to your managed object
+
 }
 
 func ==(lhs: MengDay, rhs: MengDay) -> Bool {
-    return lhs.firstName == rhs.firstName &&
-            lhs.lastName == rhs.lastName &&
-            lhs.birthday == rhs.birthday
+    return lhs.firstName == rhs.firstName && lhs.lastName == rhs.lastName && lhs.birthday == rhs.birthday
 }
+
+

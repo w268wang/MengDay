@@ -7,19 +7,30 @@
 //
 
 import UIKit
+import CoreData
 
 class MengDayListDataProvider: NSObject, UITableViewDataSource {
     
     private let cellIdentifer = "Cell"
     private var birthdays = [MengDay]()
-    
+    var document: UIManagedDocument!
+
+    override private init() {
+        super.init()
+    }
+
+    convenience init(restorationCallback: () -> ()) {
+        self.init()
+        setupDocument(restorationCallback)
+    }
+
     private let gregorian = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
     
     var todayComponents: NSDateComponents?
     var today: NSDate? {
         didSet {
             if let today = today {
-                todayComponents = gregorian?.components([.Month, .Day, .Year], fromDate: today)
+                todayComponents = today.convertToComponents()
             }
         }
     }
@@ -34,8 +45,10 @@ class MengDayListDataProvider: NSObject, UITableViewDataSource {
         let birthday = birthdays[indexPath.row]
         cell.nameLabel.text = birthday.firstName
         cell.patternNameLabel.text = birthday.firstName
-        cell.birthdayLabel.text = "\(birthday.birthday.day) \(birthday.birthday.month)"
-        
+        if let birthdayComp = birthday.birthday?.convertToComponents() {
+            cell.birthdayLabel.text = "\(birthdayComp.day) \(birthdayComp.month)"
+        }
+
         if let progress = progressUntilBirthday(birthday) {
             cell.updateProgress(progress)
         }
@@ -45,7 +58,7 @@ class MengDayListDataProvider: NSObject, UITableViewDataSource {
     
     func progressUntilBirthday(birthday: MengDay) -> Float? {
         
-        let calculationComponents = birthday.birthday.copy() as! NSDateComponents
+        let calculationComponents = (birthday.birthday!.copy() as! NSDate).convertToComponents()
         if let todayComponents = todayComponents {
             calculationComponents.year = todayComponents.year
             
@@ -66,13 +79,65 @@ class MengDayListDataProvider: NSObject, UITableViewDataSource {
             return nil
         }
     }
-}
 
-extension MengDayListDataProvider {
-    func addBirthday(birthday: MengDay) {
-        if !birthdays.contains(birthday) {
-            birthdays.append(birthday)
-            birthdays.sortInPlace { progressUntilBirthday($0) > progressUntilBirthday($1) }
+    func setupDocument(restorationCallback: () -> ()) {
+        let documentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        let documentName = "BirthdayHistory"
+        let url = documentsDirectory.first!.URLByAppendingPathComponent(documentName)
+        document = UIManagedDocument(fileURL: url)
+        if NSFileManager.defaultManager().fileExistsAtPath(url.path!) {
+            document.openWithCompletionHandler { success in
+                if success {
+                    self.restoreBirthdays(restorationCallback)
+                } else  {
+                    NSLog("Cannot open document at url: \(url)")
+                }
+            }
+        } else {
+            document.saveToURL(url, forSaveOperation: .ForCreating) { success in
+                if !success {
+                    NSLog("Cannot create document at url: \(url)")
+                }
+            }
         }
     }
+
+    func addBirthday(firstName: String, lastName: String, birthday: NSDate) {
+        if document.documentState == .Normal {
+            let mBirthday = NSEntityDescription.insertNewObjectForEntityForName("MengDay", inManagedObjectContext: document.managedObjectContext) as! MengDay
+            mBirthday.firstName = firstName
+            mBirthday.lastName = lastName
+            mBirthday.birthday = birthday
+            birthdays.append(mBirthday)
+            birthdays.sortInPlace(compareBirthday)
+        }
+    }
+
+    func restoreBirthdays(callback: () -> ()) {
+        let request = NSFetchRequest(entityName: "MengDay")
+        if document.documentState == .Normal {
+            if let rawBirthdays = try? document.managedObjectContext.executeFetchRequest(request) as! [MengDay] {
+                for birthday in rawBirthdays {
+                    NSLog("Restoring: \(birthday.firstName) \(birthday.lastName)")
+                    birthdays.append(birthday)
+                }
+                birthdays.sortInPlace(compareBirthday)
+                callback()
+            }
+
+        }
+    }
+
+    func compareBirthday(md1: MengDay, md2: MengDay) -> Bool {
+        return progressUntilBirthday(md1) > progressUntilBirthday(md2)
+    }
+
 }
+
+extension NSDate {
+    func convertToComponents() -> NSDateComponents {
+        let gregorian = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        return gregorian.components([.Month, .Day, .Year], fromDate: self)
+    }
+}
+
