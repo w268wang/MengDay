@@ -13,7 +13,6 @@
 		32FEBA3B1D234B5400D5CF09 /* MengDayTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32FEBA3A1D234B5400D5CF09 /* MengDayTableViewController.swift */; };
 		32FEBA3D1D234ECD00D5CF09 /* MengDayListDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32FEBA3C1D234ECD00D5CF09 /* MengDayListDataProvider.swift */; };
 		32FEBA411D2353B800D5CF09 /* MengDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32FEBA401D2353B800D5CF09 /* MengDayCell.swift */; };
-		32FEBA461D23575500D5CF09 /* cellBackgroundPattern.png in Resources */ = {isa = PBXBuildFile; fileRef = 32FEBA451D23575500D5CF09 /* cellBackgroundPattern.png */; };
 		B0010C2B1D24068A0018261A /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0010C291D24068A0018261A /* Storyboard.storyboard */; };
 		B046F70B1D30502D00F16CC5 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B046F7091D30502D00F16CC5 /* Model.xcdatamodeld */; };
 		B046F7121D306B4500F16CC5 /* MengDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B046F7101D306B4500F16CC5 /* MengDay.swift */; };
@@ -49,7 +48,6 @@
 		32FEBA3A1D234B5400D5CF09 /* MengDayTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MengDayTableViewController.swift; path = MengdayList/MengDayTableViewController.swift; sourceTree = "<group>"; };
 		32FEBA3C1D234ECD00D5CF09 /* MengDayListDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MengDayListDataProvider.swift; path = MengdayList/MengDayListDataProvider.swift; sourceTree = "<group>"; };
 		32FEBA401D2353B800D5CF09 /* MengDayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MengDayCell.swift; path = MengdayList/MengDayCell.swift; sourceTree = "<group>"; };
-		32FEBA451D23575500D5CF09 /* cellBackgroundPattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cellBackgroundPattern.png; path = Images/cellBackgroundPattern.png; sourceTree = "<group>"; };
 		B0010C2A1D24068A0018261A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Storyboard.storyboard; sourceTree = "<group>"; };
 		B046F70A1D30502D00F16CC5 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		B046F7101D306B4500F16CC5 /* MengDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MengDay.swift; path = Model/MengDay.swift; sourceTree = "<group>"; };
@@ -103,7 +101,6 @@
 		32FEB9DF1D143D7E00D5CF09 /* MengDay */ = {
 			isa = PBXGroup;
 			children = (
-				32FEBA421D2356DE00D5CF09 /* Images */,
 				32FEBA3C1D234ECD00D5CF09 /* MengDayListDataProvider.swift */,
 				B0010C291D24068A0018261A /* Storyboard.storyboard */,
 				B046F7091D30502D00F16CC5 /* Model.xcdatamodeld */,
@@ -125,14 +122,6 @@
 				32FEB9F71D143D7F00D5CF09 /* Info.plist */,
 			);
 			path = MengDayTests;
-			sourceTree = "<group>";
-		};
-		32FEBA421D2356DE00D5CF09 /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				32FEBA451D23575500D5CF09 /* cellBackgroundPattern.png */,
-			);
-			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -239,7 +228,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32FEBA461D23575500D5CF09 /* cellBackgroundPattern.png in Resources */,
 				B0010C2B1D24068A0018261A /* Storyboard.storyboard in Resources */,
 				32FEB9E81D143D7E00D5CF09 /* Assets.xcassets in Resources */,
 			);

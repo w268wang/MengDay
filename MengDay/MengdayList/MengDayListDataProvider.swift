@@ -29,9 +29,7 @@ class MengDayListDataProvider: NSObject, UITableViewDataSource {
     var todayComponents: NSDateComponents?
     var today: NSDate? {
         didSet {
-            if let today = today {
-                todayComponents = today.convertToComponents()
-            }
+            todayComponents = today?.convertToComponents()
         }
     }
 

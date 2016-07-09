@@ -16,8 +16,3 @@ class MengDay: NSManagedObject {
 
 }
 
-func ==(lhs: MengDay, rhs: MengDay) -> Bool {
-    return lhs.firstName == rhs.firstName && lhs.lastName == rhs.lastName && lhs.birthday == rhs.birthday
-}
-
-
