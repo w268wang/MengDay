@@ -22,7 +22,7 @@ class MengDayCell: UITableViewCell {
     }
 
     override func awakeFromNib() {
-        patternView.backgroundColor = UIColor(patternImage: UIImage(named: "cellBackGroundPattern")!)
+        patternView.backgroundColor = UIColor(patternImage: UIImage(named: "cellBackgroundPattern")!)
         patternNameLabel.textColor = UIColor.whiteColor()
     }
     
